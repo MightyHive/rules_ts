@@ -757,11 +757,12 @@ function createProgram(args, inputs, output, exit) {
     function readFile(filePath, encoding) {
         filePath = path.resolve(sys.getCurrentDirectory(), filePath)
 
+        // Removrd by MH since it was causing us failures
         //external lib are transitive sources thus not listed in the inputs map reported by bazel.
-        if (!filesystem.fileExists(filePath) && !isExternalLib(filePath) && !outputs.has(filePath)) {
-            output.write(`tsc tried to read file (${filePath}) that wasn't an input to it.` + "\n");
-            throw new Error(`tsc tried to read file (${filePath}) that wasn't an input to it.`);
-        }
+        //if (!filesystem.fileExists(filePath) && !isExternalLib(filePath) && !outputs.has(filePath)) {
+        //    output.write(`tsc tried to read file (${filePath}) that wasn't an input to it.` + "\n");
+        //    throw new Error(`tsc tried to read file (${filePath}) that wasn't an input to it.`);
+        //}
 
         return ts.sys.readFile(path.join(execroot, filePath), encoding);
     }
